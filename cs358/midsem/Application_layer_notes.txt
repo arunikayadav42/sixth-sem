@@ -1,0 +1,24 @@
+It is important to note that the server sends requested files to clients without stor-
+ing any state information about the client. If a particular client asks for the same object
+twice in a period of a few seconds, the server does not respond by saying that it just
+served the object to the client; instead, the server resends the object, as it has com-
+pletely forgotten what it did earlier. Because an HTTP server maintains no informa-
+tion about the clients, HTTP is said to be a stateless protocol.
+
+Transport layer:segment
+network layer: datagram
+link layer: frames
+
+********Non-Persistent and Persistent Connections
+When this client-server interaction is taking place over TCP, the appli-
+cation developer needs to make an important decision––should each request/response
+pair be sent over a separate TCP connection, or should all of the requests and their cor-
+responding responses be sent over the same TCP connection? In the former approach,
+the application is said to use non-persistent connections; and in the latter approach,
+persistent connections.
+
+Typically, the HTTP server closes a con-
+nection when it isn’t used for a certain time (a configurable timeout interval). When
+the server receives the back-to-back requests, it sends the objects back-to-back. The
+default mode of HTTP uses persistent connections with pipelining.
+

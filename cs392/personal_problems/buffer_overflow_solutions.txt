@@ -1,0 +1,57 @@
+Q4.4The direction of stack growth  does not effects the overflow problem , The overflow problem occurs because of the allocated segments get exhausted ,and it is not dependent on the direction of the growth of stack . The direction of the stack grow is dpendent on the language used in the implementation . 
+
+Consider the example of C code :
+
+void bar(char* str) {
+
+char a[7];
+
+strcpy(a, str);
+
+}
+
+ 
+
+void foo() {
+
+bar("Hello");
+
+}
+
+In this example, foo() calls bar()  function  the  bar() copies that string into the 7-byte char array  by using  strcpy.
+Since the string"Hello "is passed which fits in the sized buffer the code will be correct ,  But if we passed in a larger string, there will be overflow   to undefined results. Commonly this attack will happen  to overwrite the function's return address with a pointer to user provided code, Which will seize the control of program  . In the given example if the stack grows upwards or from low to high address the problem will be the overwritten buffer would overflow away from the return address pointer ,  the overflow in  c  code can overwrite the return address pointer of strcpy() . 
+
+The traditional way of growing of stack is from high to low address , the growth of stack from low to high address may not always overcome the problems .
+
+Q4.6Yes. buffer is now allocated on the heap, and not on the stack, and you can't reach the stack by overflowing something on the heap.
+
+Q4.7
+This concept is know as Stack Buffer Overflow. In software, a stack buffer overflow  occurs when a program writes to a memory address on the program's call stack outside of the intended data structure.Stack buffer overflow can be caused deliberately as part of an attack known as stack smashing.
+
+ 
+
+Now let us analyse the given return address :
+
+ *((long *) (buffer + 0x24)) = buffer+ 0x150;
+
+0x150 =  336
+
+0x24 = 36
+
+ 
+
+So lets say my buffer start locaton is in memory location -> 2333932112
+
+then the return address would be in 2333932448 which is having a difference of 336.
+
+So thus a buffer of size 336 is enough and this return adres will point to the shell code.
+
+ 
+
+The buffer we are overflowing is  the perfect location to write our shell code without overwriting another important bit of memory.
+
+Q4.8(Doubt)
+
+Q4.9
+
+Q4.10(doubt)

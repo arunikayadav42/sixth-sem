@@ -1,0 +1,158 @@
+Cryptographic techniques allow a sender to disguise data so that an intruder can
+gain no information from the intercepted data. The receiver, of course, must be able
+to recover the original data from the disguised data.
+Suppose now that Alice wants to send a message to Bob. Alice’s message in
+its original form (for example, “Bob, I love you. Alice”) is known as
+plaintext, or cleartext. Alice encrypts her plaintext message using an encryption
+algorithm so that the encrypted message, known as ciphertext, looks unintelligible
+to any intruder.Alice provides a key, K A , a string of numbers or characters, as
+input to the encryption algorithm. The encryption algorithm takes the key and the
+plaintext message, m, as input and produces ciphertext as output. The notation
+K A (m) refers to the ciphertext form (encrypted using the key K A ) of the plaintext
+message, m. The actual encryption algorithm that uses key K A will be evident from
+the context. Similarly, Bob will provide a key, K B , to the decryption algorithm
+that takes the ciphertext and Bob’s key as input and produces the original plain-
+text as output. That is, if Bob receives an encrypted message K A (m), he decrypts it
+by computing K B (K A (m)) = m. In symmetric key systems, Alice’s and Bob’s keys
+are identical and are secret. In public key systems, a pair of keys is used. One of
+the keys is known to both Bob and Alice (indeed, it is known to the whole world).
+The other key is known only by either Bob or Alice (but not both). In the follow-
+ing two subsections, we consider symmetric key and public key systems in more
+detail.
+
+*******************Symmetric Key Cryptography
+Alice provides a key, K A , a string of numbers or characters, as
+input to the encryption algorithm. The encryption algorithm takes the key and the
+plaintext message, m, as input and produces ciphertext as output. The notation
+K A (m) refers to the ciphertext form (encrypted using the key K A ) of the plaintext
+message, m. The actual encryption algorithm that uses key K A will be evident from
+the context. Similarly, Bob will provide a key, K B , to the decryption algorithm
+that takes the ciphertext and Bob’s key as input and produces the original plain-
+text as output. That is, if Bob receives an encrypted message K A (m), he decrypts it
+by computing K B (K A (m)) = m. In symmetric key systems, Alice’s and Bob’s keys
+are identical and are secret. In public key systems, a pair of keys is used. One of
+the keys is known to both Bob and Alice (indeed, it is known to the whole world).
+The other key is known only by either Bob or Alice (but not both). In the follow-
+ing two subsections, we consider symmetric key and public key systems in more
+detail.
+
+There are two broad classes of symmetric encryption techniques:
+stream ciphers and block ciphers
+
+we focus on
+block ciphers, which are used in many secure Internet protocols, including PGP
+(for secure e-mail), SSL (for securing TCP connections), and IPsec (for securing the
+network-layer transport).
+
+Continuing with this 3-bit block example, note that the mapping in Table 8.1 is
+just one mapping of many possible mappings. How many possible mappings are there?
+To answer this question, observe that a mapping is nothing more than a permuta-
+tion of all the possible inputs. There are 2 3 (= 8) possible inputs (listed under the
+input columns). These eight inputs can be permuted in 8! = 40,320 different ways.
+Since each of these permutations specifies a mapping, there are 40,320 possible
+mappings. We can view each of these mappings as a key—if Alice and Bob both
+know the mapping (the key), they can encrypt and decrypt the messages sent
+between them.
+
+
+
+*******************Public Key Encryption
+RSA:The use of public key cryptography is conceptually quite simple. Suppose Alice
+wants to communicate with Bob. As shown in Figure 8.6, rather than Bob and Alicesharing a single secret key (as in the case of symmetric key systems), Bob (the recip-
+ient of Alice’s messages) instead has two keys—a public key that is available to
+everyone in the world (including Trudy the intruder) and a private key that is known
+only to Bob. We will use the notation K B + and K B – to refer to Bob’s public and private
+keys, respectively. In order to communicate with Bob, Alice first fetches Bob’s pub-
+lic key. Alice then encrypts her message, m, to Bob using Bob’s public key and a
+known (for example, standardized) encryption algorithm; that is, Alice computes
+K B + (m). Bob receives Alice’s encrypted message and uses his private key and a known
+(for example, standardized) decryption algorithm to decrypt Alice’s encrypted mes-
+sage. That is, Bob computes K B – (K B + (m)). We will see below that there are encryp-
+tion/decryption algorithms and techniques for choosing public and private keys such
+that K B – (K B + (m)) = m; that is, applying Bob’s public key, K B + , to a message, m (to get
+K B + (m)), and then applying Bob’s private key, K B – , to the encrypted version of m (that
+is, computing K B – (K B + (m))) gives back m. This is a remarkable result! In this manner,
+Alice can use Bob’s publicly available key to send a secret message to Bob without
+either of them having to distribute any secret keys! We will see shortly that we can
+interchange the public key and private key encryption and get the same remarkable
+result––that is, K B – ( B + (m)) = K B + (K B – (m)) = m.
+
+
+It follows from the third fact that (a mod n) d mod n = a d mod n, which is an identity
+that we will soon find very useful.
+
+There are two interrelated components of RSA:
+• The choice of the public key and the private key
+• The encryption and decryption algorithm
+
+
+Messgage Integrity and authentication:
+To perform message integrity, in addition to using cryptographic hash func-
+tions, Alice and Bob will need a shared secret s. This shared secret, which is nothing
+more than a string of bits, is called the authentication key. Using this shared secret,
+message integrity can be performed as follows:
+1. Alice creates message m, concatenates s with m to create m + s, and calculates
+the hash H(m + s) (for example with SHA-1). H(m + s) is called the message
+authentication code (MAC).
+2. Alice then appends the MAC to the message m, creating an extended message
+(m, H(m + s)), and sends the extended message to Bob.
+3. Bob receives an extended message (m, h) and knowing s, calculates the MAC
+H(m + s). If H(m + s) = h, Bob concludes that everything is fine.
+
+Digital Signature:
+In a digital world, one
+often wants to indicate the owner or creator of a document, or to signify one’s agree-
+ment with a document’s content. A digital signature is a cryptographic technique
+for achieving these goals in a digital world.
+
+Let’s now consider how we might design a digital signature scheme. Observe
+that when Bob signs a message, Bob must put something on the message that is
+unique to him. Bob could consider attaching a MAC for the signature, where the
+MAC is created by appending his key (unique to him) to the message, and then taking
+the hash. But for Alice to verify the signature, she must also have a copy of the key,
+in which case the key would not be unique to Bob. Thus, MACs are not going to get
+the job done here.
+Recall that with public-key cryptography, Bob has both a public and private
+key, with both of these keys being unique to Bob. Thus, public-key cryptography is
+an excellent candidate for providing digital signatures. Let us now examine how it
+is done.Bob simply uses his private key, K B – , to com-
+pute K B – (m). At first, it might seem odd that Bob is using his private key (which, as
+we saw in Section 8.2, was used to decrypt a message that had been encrypted with his public key) to sign a document. But recall that encryption and decryption
+are nothing more than mathematical operations (exponentiation to the power of e
+or d in RSA; see Section 8.2) and recall that Bob’s goal is not to scramble or
+obscure the contents of the document, but rather to sign the document in a man-
+ner that is verifiable and nonforgeable. Bob’s digital signature of the document is
+K B – (m).
+
+Public Key Certification:
+An important application of digital signatures is public key certification, that is,
+certifying that a public key belongs to a specific entity. Public key certification is
+used in many popular secure networking protocols, including IPsec and SSL.
+To gain insight into this problem, let’s consider an Internet-commerce version
+of the classic “pizza prank.” Alice is in the pizza delivery business and accepts
+orders over the Internet. Bob, a pizza lover, sends Alice a plaintext message that
+includes his home address and the type of pizza he wants. In this message, Bob also
+includes a digital signature (that is, a signed hash of the original plaintext message)
+to prove to Alice that he is the true source of the message. To verify the signature,
+Alice obtains Bob’s public key (perhaps from a public key server or from the e-mail
+message) and checks the digital signature. In this manner she makes sure that Bob,
+rather than some adolescent prankster, placed the order.
+This all sounds fine until clever Trudy comes along. As shown in Figure 8.13,
+Trudy is indulging in a prank. She sends a message to Alice in which she says she is
+Bob, gives Bob’s home address, and orders a pizza. In this message she also
+includes her (Trudy’s) public key, although Alice naturally assumes it is Bob’s pub-
+lic key. Trudy also attaches a digital signature, which was created with her own
+(Trudy’s) private key. After receiving the message, Alice applies Trudy’s public key
+(thinking that it is Bob’s) to the digital signature and concludes that the plaintext
+message was indeed created by Bob. Bob will be very surprised when the delivery
+person brings a pizza with pepperoni and anchovies to his home!
+We see from this example that for public key cryptography to be useful, you
+need to be able to verify that you have the actual public key of the entity (person,
+router, browser, and so on) with whom you want to communicate. For example, when
+Alice wants to communicate with Bob using public key cryptography, she needs to
+verify that the public key that is supposed to be Bob’s is indeed Bob’s.
+Binding a public key to a particular entity is typically done by a Certification
+Authority (CA), whose job is to validate identities and issue certificates. A CA has
+the following roles:
+
+

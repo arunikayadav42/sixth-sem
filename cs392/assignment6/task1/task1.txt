@@ -1,0 +1,51 @@
+---------------------
+http://www.csrflabelgg.com/cache/1501099611/default/core/river/filter.js
+Host: www.csrflabelgg.com
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:60.0) Gecko/20100101 Firefox/60.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://www.csrflabelgg.com/activity
+Cookie: Elgg=bi9bv4f1eronnsiuk0h50bami7
+Connection: keep-alive
+
+GET: HTTP/1.1 200 OK
+Date: Sun, 14 Apr 2019 14:09:05 GMT
+Server: Apache/2.4.18 (Ubuntu)
+Expires: Mon, 14 Oct 2019 14:09:05 GMT
+Pragma: public
+Cache-Control: public
+ETag: "1501099611-gzip"
+Vary: Accept-Encoding
+Content-Encoding: gzip
+Content-Length: 277
+Keep-Alive: timeout=5, max=99
+Connection: Keep-Alive
+Content-Type: application/javascript;charset=utf-8
+---------------------
+http://www.csrflabelgg.com/action/login
+Host: www.csrflabelgg.com
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:60.0) Gecko/20100101 Firefox/60.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://www.csrflabelgg.com/activity
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 111
+Cookie: Elgg=bi9bv4f1eronnsiuk0h50bami7
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+__elgg_token=FPngNoVAMWjsDUyGcN0AKg&__elgg_ts=1555250941&username=alice&password=seedalice&returntoreferer=true
+POST: HTTP/1.1 302 Found
+Date: Sun, 14 Apr 2019 14:15:53 GMT
+Server: Apache/2.4.18 (Ubuntu)
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: Elgg=bmj43audqnlov91r6d9dab3d26; path=/
+Location: http://www.csrflabelgg.com/activity
+Content-Length: 0
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html;charset=utf-8
+---------------------

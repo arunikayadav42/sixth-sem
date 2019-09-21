@@ -1,0 +1,16 @@
+Q5.4
+If the "/bin/sh" is pointed to "/bin/bash", even if we can invoke a shell within a Set-UID program
+that is running with the root privilege, we will not get the root privilege. This is because bash automatically
+downgrades its privilege if it is executed in the Set-UID root context;
+However, there are ways to get around this protection scheme. Although /bin/bash has restriction on
+running Set-UID programs, it does allow the real root to run shells. Therefore, if we can turn the current
+Set-UID process into a real root process, before invoking /bin/bash, we can bypass that restriction
+of bash. The setuid(0) system call can help you achieve that. Therefore, we need to first invoke
+setuid(0), and then invoke system("/bin/sh"); all of these can be done using the Return-to-libc
+mechanism.
+Basically, we need to “return to libc” twice. We first let the target program to return to the setuid
+function in libc. When this function returns, it will fetch the return address from the stack, and jump to
+that address. If we can let this return address point to system, we can force the function setuid to return
+to the entry point of system. We have to be very careful when conducting this process, because we have
+to put the appropriate arguments in the right place of the stack.
+
